@@ -15,6 +15,7 @@ function App() {
     setTodos(response.data);
   };
 
+  console.log("react js working")
   const addTodo = async () => {
     if (task.trim() === "") return;
     await axios.post(API_URL, { task, completed: false });
