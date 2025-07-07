@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
 
-const API_URL = "http://localhost:8080/api/todos";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -11,20 +11,19 @@ function App() {
   const [editingTask, setEditingTask] = useState("");
 
   const fetchTodos = async () => {
-    const response = await axios.get(API_URL);
+    const response = await axios.get(`${API_URL}/api/todos`);
     setTodos(response.data);
   };
 
-  console.log("react js working")
   const addTodo = async () => {
     if (task.trim() === "") return;
-    await axios.post(API_URL, { task, completed: false });
+    await axios.post(`${API_URL}/api/todos`, { task, completed: false });
     setTask("");
     fetchTodos();
   };
 
   const toggleTodo = async (todo) => {
-    await axios.put(`${API_URL}/${todo.id}`, {
+    await axios.put(`${API_URL}/api/todos/${todo.id}`, {
       ...todo,
       completed: !todo.completed,
     });
@@ -32,7 +31,7 @@ function App() {
   };
 
   const deleteTodo = async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
+    await axios.delete(`${API_URL}/api/todos/${id}`);
     fetchTodos();
   };
 
@@ -43,7 +42,7 @@ function App() {
 
   const saveEdit = async (todo) => {
     if (editingTask.trim() === "") return;
-    await axios.put(`${API_URL}/${todo.id}`, {
+    await axios.put(`${API_URL}/api/todos/${todo.id}`, {
       ...todo,
       task: editingTask,
     });
