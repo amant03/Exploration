@@ -1,9 +1,8 @@
 services:
   - type: web
     name: spring-boot-backend
-    env: java
-    region: oregon
     plan: free
+    region: oregon
     buildCommand: ./mvnw clean package -DskipTests
     startCommand: java -jar target/*.jar
     rootDir: backend
