@@ -2,14 +2,14 @@ FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
-# Copy only backend folder contents into container
-COPY backend/ .
+# Copy only backend files into /app
+COPY backend/ /app/
 
-# Make mvnw executable
+# Ensure mvnw is executable
 RUN chmod +x mvnw
 
-# Build the Spring Boot app
+# Build the project
 RUN ./mvnw clean package -DskipTests
 
-# Run the built JAR
+# Run the application
 CMD ["java", "-jar", "target/demo-0.0.1-SNAPSHOT.jar"]
